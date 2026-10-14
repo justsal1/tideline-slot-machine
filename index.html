@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b1514">
+  <meta name="theme-color" content="#160f20">
   <title>Tideline - Ocean Slots</title>
   <style>
     :root {
       color-scheme: dark;
-      --ink: #e8efeb;
-      --sea: #214c48;
-      --sea-deep: #0b1514;
-      --foam: #e4eee8;
-      --paper: #121d1c;
-      --coral: #fa8064;
-      --sun: #f2c95d;
-      --muted: #9aada6;
-      --line: rgba(222, 239, 231, .13);
+      --ink: #f0eaf5;
+      --sea: #684594;
+      --sea-deep: #160f20;
+      --foam: #eee5f4;
+      --paper: #1b1423;
+      --coral: #fb8974;
+      --sun: #d7b3ff;
+      --muted: #ac9db9;
+      --line: rgba(233, 218, 247, .14);
       --shadow: 0 24px 70px rgba(0, 0, 0, .42);
     }
 
@@ -30,8 +30,8 @@
       display: grid;
       place-items: center;
       color: var(--ink);
-      background-color: #0b1514;
-      background-image: repeating-linear-gradient(135deg, rgba(118, 166, 147, .045) 0 1px, transparent 1px 13px), linear-gradient(145deg, #172725, #091110);
+      background-color: #120d19;
+      background-image: repeating-linear-gradient(135deg, rgba(191, 155, 227, .055) 0 1px, transparent 1px 13px), linear-gradient(145deg, #261932, #100b16);
       font-family: "Trebuchet MS", "Segoe UI", sans-serif;
     }
 
@@ -41,14 +41,14 @@
     .game-shell {
       width: min(100%, 880px);
       overflow: hidden;
-      border: 1px solid rgba(222, 239, 231, .12);
+      border: 1px solid rgba(233, 218, 247, .14);
       border-radius: 12px;
       background: var(--paper);
       box-shadow: var(--shadow);
     }
 
     .dashboard { padding: 30px; }
-    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 19px; }
     .stat {
       min-height: 76px;
       padding: 13px 17px;
@@ -58,7 +58,7 @@
       gap: 10px;
       border: 1px solid var(--line);
       border-radius: 7px;
-      background: #1a2927;
+      background: #251c30;
     }
     .stat-label { display: block; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: 1.2px; }
     .stat-value { display: block; margin-top: 4px; font-variant-numeric: tabular-nums; font-size: 24px; font-weight: 800; }
@@ -67,19 +67,19 @@
 
     .machine {
       position: relative;
-      padding: 25px 24px 21px;
-      border: 1px solid #315d55;
+      padding: 22px 20px 18px;
+      border: 1px solid #604773;
       border-radius: 9px;
-      background-color: #193431;
+      background-color: #281d35;
       background-image: repeating-linear-gradient(0deg, transparent 0 23px, rgba(255,255,255,.035) 24px 25px);
-      box-shadow: inset 0 1px rgba(255,255,255,.08), 0 5px 0 #102522;
+      box-shadow: inset 0 1px rgba(255,255,255,.08), 0 5px 0 #1b1325;
     }
     .reels {
       position: relative;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      padding: 13px;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      padding: 11px;
       overflow: hidden;
       border: 1px solid rgba(245, 200, 76, .8);
       border-radius: 8px;
@@ -93,13 +93,13 @@
       display: grid;
       place-items: center;
       overflow: hidden;
-      border: 1px solid #e6e2ca;
+      border: 1px solid #d9ccdf;
       border-radius: 6px;
-      background: linear-gradient(150deg, #e9e8d9, #cdd3c4);
+      background: linear-gradient(150deg, #eee8dc, #d8cfe0);
       box-shadow: inset 0 3px 8px rgba(23,52,51,.11), 0 2px 0 rgba(0,0,0,.18);
     }
     .reel-window::after { position: absolute; inset: 0; content: ""; pointer-events: none; background: linear-gradient(180deg, rgba(255,255,255,.38), transparent 24%, transparent 76%, rgba(23,52,51,.06)); }
-    .symbol { z-index: 1; font-size: clamp(46px, 10vw, 86px); line-height: 1; filter: drop-shadow(0 4px 1px rgba(23,52,51,.12)); }
+    .symbol { z-index: 1; font-size: clamp(32px, 7vw, 64px); line-height: 1; filter: drop-shadow(0 4px 1px rgba(23,52,51,.12)); }
     .reel-window.spinning .symbol { animation: reel-blur .12s linear infinite alternate; filter: blur(1px); }
     .reel-window.stopped { animation: land .24s ease-out; }
     .reels.winner .reel-window { border-color: var(--sun); box-shadow: 0 0 0 2px var(--sun), 0 0 22px rgba(245,200,76,.52); }
@@ -111,13 +111,13 @@
       margin: 14px 0 0;
       display: grid;
       place-items: center;
-      color: #f6e7a9;
+      color: #ead8ff;
       text-align: center;
       font-family: Georgia, serif;
       font-size: 18px;
       font-weight: 700;
     }
-    .message.win { color: #ffe17a; animation: announce .35s ease-out; }
+    .message.win { color: #d7b3ff; animation: announce .35s ease-out; }
     .message.loss { color: #d4e4d7; }
     @keyframes announce { from { transform: scale(.94); opacity: .4; } to { transform: scale(1); opacity: 1; } }
 
@@ -129,37 +129,37 @@
     .stepper { display: flex; align-items: center; gap: 5px; }
     .stepper button {
       width: 42px; height: 42px; display: grid; place-items: center;
-      border: 1px solid rgba(222, 239, 231, .18); border-radius: 7px; color: var(--ink); background: #263936;
+      border: 1px solid rgba(233, 218, 247, .2); border-radius: 7px; color: var(--ink); background: #352744;
       cursor: pointer; font-size: 21px; font-weight: 700;
     }
-    .stepper button:hover:not(:disabled) { border-color: var(--sun); background: #344a45; transform: translateY(-1px); }
+    .stepper button:hover:not(:disabled) { border-color: var(--sun); background: #4b365e; transform: translateY(-1px); }
     button:disabled { opacity: .45; cursor: not-allowed; }
 
     .spin-button {
       min-width: 194px; min-height: 60px; padding: 0 26px;
-      border: 1px solid #ffe08a; border-bottom: 4px solid #b88b2c; border-radius: 8px;
-      color: #17201b; background: var(--sun); cursor: pointer;
+      border: 1px solid #e8cfff; border-bottom: 4px solid #76549b; border-radius: 8px;
+      color: #21172b; background: var(--sun); cursor: pointer;
       font-size: 14px; font-weight: 900; letter-spacing: 1px;
-      box-shadow: 0 7px 18px rgba(242, 201, 93, .16);
+      box-shadow: 0 7px 20px rgba(186, 139, 235, .2);
       transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
     }
-    .spin-button:hover:not(:disabled) { transform: translateY(-2px); background: #ffdb77; box-shadow: 0 10px 24px rgba(242, 201, 93, .24); }
+    .spin-button:hover:not(:disabled) { transform: translateY(-2px); background: #e4c9ff; box-shadow: 0 10px 24px rgba(186, 139, 235, .3); }
     .spin-button:active:not(:disabled) { transform: translateY(1px); border-bottom-width: 2px; }
     .spin-button:disabled { border-bottom-width: 0; }
 
     .quick-control { display: flex; align-items: center; justify-content: flex-end; gap: 9px; color: var(--muted); font-size: 12px; font-weight: 700; }
     .toggle {
       width: 42px; height: 24px; padding: 3px; border: 0; border-radius: 20px;
-      background: #354541; cursor: pointer; transition: background .18s ease;
+      background: #40334a; cursor: pointer; transition: background .18s ease;
     }
     .toggle::before { display: block; width: 18px; height: 18px; border-radius: 50%; content: ""; background: white; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform .18s ease; }
-    .toggle[aria-pressed="true"] { background: var(--coral); }
+    .toggle[aria-pressed="true"] { background: var(--sea); }
     .toggle[aria-pressed="true"]::before { transform: translateX(18px); }
 
     .paytable { margin-top: 27px; }
     .section-heading { margin: 0 0 11px; display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 10px; font-weight: 900; letter-spacing: 1.4px; }
     .payouts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
-    .payout { padding: 11px 5px 10px; text-align: center; background: #192624; border-right: 1px solid var(--line); }
+    .payout { padding: 11px 5px 10px; text-align: center; background: #251b30; border-right: 1px solid var(--line); }
     .payout:last-child { border-right: 0; }
     .payout-symbol { display: block; font-size: 23px; }
     .payout-name { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; font-weight: 700; }
@@ -170,10 +170,10 @@
     .leaderboard-title { margin: 0; color: var(--foam); font-size: 12px; font-weight: 900; letter-spacing: 1.2px; }
     .board-scope { color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: 1px; }
     .leaderboard-list { margin: 0; padding: 0; display: grid; gap: 5px; list-style: none; }
-    .leaderboard-row { min-height: 42px; padding: 7px 11px; display: grid; grid-template-columns: 34px 1fr 76px auto; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 6px; background: rgba(255,255,255,.035); }
+    .leaderboard-row { min-height: 42px; padding: 7px 11px; display: grid; grid-template-columns: 34px 1fr 112px auto; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 6px; background: rgba(255,255,255,.035); }
     .score-rank { color: var(--sun); font-size: 11px; font-weight: 900; }
     .score-name { color: var(--foam); font-size: 12px; font-weight: 800; }
-    .score-date { color: var(--muted); font-size: 10px; }
+    .score-record { color: var(--muted); font-size: 10px; }
     .score-value { color: var(--sun); font-size: 12px; font-weight: 900; text-align: right; }
     .leaderboard-empty { margin: 0; padding: 13px 11px; color: var(--muted); font-size: 12px; text-align: center; }
     .footer { margin-top: 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); font-size: 10px; }
@@ -184,11 +184,12 @@
     @media (max-width: 600px) {
       body { padding: 12px; }
       .dashboard { padding: 18px 15px 20px; }
-      .stats { gap: 8px; margin-bottom: 15px; }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 15px; }
       .stat { min-height: 68px; padding: 10px 11px; }
       .stat-value { font-size: 21px; }
       .machine { padding: 20px 13px 17px; }
-      .reels { gap: 7px; padding: 8px; }
+      .reels { gap: 5px; padding: 7px; }
+      .symbol { font-size: clamp(28px, 8vw, 42px); }
       .controls { grid-template-columns: 1fr auto; gap: 15px 8px; }
       .bet-control { gap: 7px; }
       .bet-copy { display: none; }
@@ -198,8 +199,8 @@
       .payout { padding-left: 2px; padding-right: 2px; }
       .payout-symbol { font-size: 20px; }
       .payout-name { font-size: 9px; }
-      .leaderboard-row { grid-template-columns: 28px 1fr auto; gap: 7px; padding-right: 8px; padding-left: 8px; }
-      .score-date { display: none; }
+      .leaderboard-row { grid-template-columns: 26px 1fr auto; gap: 7px; padding-right: 8px; padding-left: 8px; }
+      .score-record { font-size: 9px; }
       .footer { font-size: 9px; }
     }
 
@@ -217,16 +218,38 @@
           <span class="stat-icon" aria-hidden="true">&#129689;</span>
         </div>
         <div class="stat">
+          <div><span class="stat-label">WINS</span><strong class="stat-value" id="win-count">0</strong></div>
+          <span class="stat-icon" aria-hidden="true">&#127942;</span>
+        </div>
+        <div class="stat">
+          <div><span class="stat-label">LOSSES</span><strong class="stat-value" id="loss-count">0</strong></div>
+          <span class="stat-icon" aria-hidden="true">&#127987;</span>
+        </div>
+        <div class="stat">
           <div><span class="stat-label">LAST WIN</span><strong class="stat-value" id="last-win">0 <small>tokens</small></strong></div>
           <span class="stat-icon" aria-hidden="true">&#10024;</span>
         </div>
       </div>
 
+      <section class="paytable" aria-label="Payout table">
+        <h2 class="section-heading"><span>TOP SYMBOL PAYOUTS</span><span>BASE MULTIPLIER</span></h2>
+        <div class="payouts">
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#55;&#65039;&#8419;</span><span class="payout-name">Lucky 7</span><strong class="payout-value">30x</strong></div>
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#129450;</span><span class="payout-name">Pearl</span><strong class="payout-value">15x</strong></div>
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#128032;</span><span class="payout-name">Fish</span><strong class="payout-value">10x</strong></div>
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#129408;</span><span class="payout-name">Crab</span><strong class="payout-value">7x</strong></div>
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#128026;</span><span class="payout-name">Shell</span><strong class="payout-value">5x</strong></div>
+        </div>
+        <p class="payout-note">3 matches pay base · 4 pay 2x · 5 pay 3x. Any pair returns half your bet.</p>
+      </section>
+
       <section class="machine" aria-label="Slot reels">
         <div class="reels" id="reels" aria-label="Slot results">
           <div class="reel-window"><span class="symbol" id="reel-0" aria-label="Shell">&#128026;</span></div>
           <div class="reel-window"><span class="symbol" id="reel-1" aria-label="Pearl">&#129450;</span></div>
-          <div class="reel-window"><span class="symbol" id="reel-2" aria-label="Lucky seven">7</span></div>
+          <div class="reel-window"><span class="symbol" id="reel-2" aria-label="Fish">&#128032;</span></div>
+          <div class="reel-window"><span class="symbol" id="reel-3" aria-label="Crab">&#129408;</span></div>
+          <div class="reel-window"><span class="symbol" id="reel-4" aria-label="Lucky seven">&#55;&#65039;&#8419;</span></div>
         </div>
         <p class="message" id="message" role="status" aria-live="polite">Ready when you are.</p>
       </section>
@@ -247,24 +270,13 @@
         </div>
       </div>
 
-      <section class="paytable" aria-label="Payout table">
-        <h2 class="section-heading"><span>THREE OF A KIND</span><span>WIN MULTIPLIER</span></h2>
-        <div class="payouts">
-          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#55;&#65039;&#8419;</span><span class="payout-name">Lucky 7</span><strong class="payout-value">30x</strong></div>
-          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#129450;</span><span class="payout-name">Pearl</span><strong class="payout-value">15x</strong></div>
-          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#128032;</span><span class="payout-name">Fish</span><strong class="payout-value">10x</strong></div>
-          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#129408;</span><span class="payout-name">Crab</span><strong class="payout-value">7x</strong></div>
-          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#128026;</span><span class="payout-name">Shell</span><strong class="payout-value">5x</strong></div>
-        </div>
-        <p class="payout-note">Any pair returns half your bet. Tokens are just for fun.</p>
-      </section>
       <section class="leaderboard" aria-labelledby="leaderboard-title">
         <div class="leaderboard-heading">
-          <h2 class="leaderboard-title" id="leaderboard-title">TOP WINS</h2>
-          <span class="board-scope">THIS BROWSER</span>
+          <h2 class="leaderboard-title" id="leaderboard-title">LEADERBOARD</h2>
+          <span class="board-scope">LOCAL TOTALS</span>
         </div>
         <ol class="leaderboard-list" id="leaderboard-list" aria-label="Top wins"></ol>
-        <p class="leaderboard-empty" id="leaderboard-empty">Win tokens to set your first record.</p>
+        <p class="leaderboard-empty" id="leaderboard-empty">Play a round to start your combined score.</p>
       </section>
       <footer class="footer">
         <span>Just a little luck from the sea.</span>
@@ -293,14 +305,19 @@
     const resetButton = document.getElementById('reset');
     const quickToggle = document.getElementById('quick-toggle');
     const storageKey = 'tideline-slot-state';
-    const scoreKey = 'tideline-slot-scores';
+    const statsKey = 'tideline-slot-stats';
     const leaderboardListEl = document.getElementById('leaderboard-list');
     const leaderboardEmptyEl = document.getElementById('leaderboard-empty');
+    const winCountEl = document.getElementById('win-count');
+    const lossCountEl = document.getElementById('loss-count');
     const bets = [10, 20, 50, 100];
     let balance = 500;
     let betIndex = 0;
     let isSpinning = false;
     let quickSpin = false;
+    let wins = 0;
+    let losses = 0;
+    let totalWon = 0;
 
     try {
       const saved = JSON.parse(sessionStorage.getItem(storageKey));
@@ -308,6 +325,15 @@
       if (bets.includes(saved?.bet)) betIndex = bets.indexOf(saved.bet);
     } catch {
       // Storage is optional; the game still works for this session.
+    }
+
+    try {
+      const savedStats = JSON.parse(localStorage.getItem(statsKey));
+      if (Number.isSafeInteger(savedStats?.wins) && savedStats.wins >= 0) wins = savedStats.wins;
+      if (Number.isSafeInteger(savedStats?.losses) && savedStats.losses >= 0) losses = savedStats.losses;
+      if (Number.isSafeInteger(savedStats?.totalWon) && savedStats.totalWon >= 0) totalWon = savedStats.totalWon;
+    } catch {
+      // Statistics are optional when browser storage is unavailable.
     }
 
     function formatNumber(value) {
@@ -327,52 +353,38 @@
       try {
         sessionStorage.setItem(storageKey, JSON.stringify({ balance, bet }));
       } catch {
-        // Private browsing may block storage; gameplay remains available.
+        // Storage is optional; the game still works for this session.
       }
     }
 
     function renderLeaderboard() {
-      let scores = [];
-      try {
-        const savedScores = JSON.parse(localStorage.getItem(scoreKey));
-        if (Array.isArray(savedScores)) {
-          scores = savedScores
-            .filter(entry => Number.isSafeInteger(entry?.amount) && entry.amount > 0 && Number.isFinite(entry?.time))
-            .sort((first, second) => second.amount - first.amount || second.time - first.time)
-            .slice(0, 5);
-        }
-      } catch {
-        // The leaderboard is optional when storage is unavailable.
-      }
-
       leaderboardListEl.replaceChildren();
-      leaderboardEmptyEl.hidden = scores.length > 0;
-      scores.forEach((entry, index) => {
-        const row = document.createElement('li');
-        row.className = 'leaderboard-row';
-        const fields = [
-          ['score-rank', String(index + 1).padStart(2, '0')],
-          ['score-name', 'YOU'],
-          ['score-date', new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric' }).format(entry.time)],
-          ['score-value', `${formatNumber(entry.amount)} tokens`]
-        ];
-        fields.forEach(([className, text]) => {
-          const cell = document.createElement('span');
-          cell.className = className;
-          cell.textContent = text;
-          row.append(cell);
-        });
-        leaderboardListEl.append(row);
+      const hasStats = wins + losses > 0;
+      leaderboardEmptyEl.hidden = hasStats;
+      if (!hasStats) return;
+
+      const row = document.createElement('li');
+      row.className = 'leaderboard-row';
+      const fields = [
+        ['score-rank', '01'],
+        ['score-name', 'YOU'],
+        ['score-record', `${formatNumber(wins)} W · ${formatNumber(losses)} L`],
+        ['score-value', `${formatNumber(totalWon)} tokens`]
+      ];
+      fields.forEach(([className, text]) => {
+        const cell = document.createElement('span');
+        cell.className = className;
+        cell.textContent = text;
+        row.append(cell);
       });
+      leaderboardListEl.append(row);
     }
 
-    function recordWin(amount) {
+    function renderStats() {
+      winCountEl.textContent = formatNumber(wins);
+      lossCountEl.textContent = formatNumber(losses);
       try {
-        const savedScores = JSON.parse(localStorage.getItem(scoreKey));
-        const scores = Array.isArray(savedScores) ? savedScores : [];
-        scores.push({ amount, time: Date.now() });
-        scores.sort((first, second) => second.amount - first.amount || second.time - first.time);
-        localStorage.setItem(scoreKey, JSON.stringify(scores.slice(0, 5)));
+        localStorage.setItem(statsKey, JSON.stringify({ wins, losses, totalWon }));
       } catch {
         // Keep the game playable when storage is unavailable.
       }
@@ -418,15 +430,15 @@
       }
 
       const counts = results.reduce((map, symbol) => map.set(symbol.name, (map.get(symbol.name) || 0) + 1), new Map());
-      const triple = results[0].name === results[1].name && results[1].name === results[2].name;
-      const pair = [...counts.values()].some(count => count === 2);
+      const [matchingName, matchCount] = [...counts.entries()].sort((first, second) => second[1] - first[1])[0];
+      const matchingSymbol = results.find(symbol => symbol.name === matchingName);
       let winnings = 0;
 
-      if (triple) {
-        winnings = wager * results[0].payout;
+      if (matchCount >= 3) {
+        winnings = wager * matchingSymbol.payout * (matchCount - 2);
         reels.classList.add('winner');
-        setMessage(`${results[0].name} jackpot! +${formatNumber(winnings)} tokens`, 'win');
-      } else if (pair) {
+        setMessage(`${matchingSymbol.name} ${matchCount}-reel hit! +${formatNumber(winnings)} tokens`, 'win');
+      } else if (matchCount === 2) {
         winnings = Math.floor(wager / 2);
         setMessage(`A matching pair! +${formatNumber(winnings)} tokens`, 'win');
       } else {
@@ -434,7 +446,13 @@
       }
 
       balance += winnings;
-      if (winnings > 0) recordWin(winnings);
+      if (winnings > 0) {
+        wins += 1;
+        totalWon += winnings;
+      } else {
+        losses += 1;
+      }
+      renderStats();
       lastWinEl.innerHTML = `${formatNumber(winnings)} <small>tokens</small>`;
       isSpinning = false;
       updateDisplay();
@@ -467,7 +485,7 @@
       }
     });
 
-    renderLeaderboard();
+    renderStats();
     updateDisplay();
   </script>
 </body>
