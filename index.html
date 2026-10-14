@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#153d3b">
+  <meta name="theme-color" content="#0b1514">
   <title>Tideline - Ocean Slots</title>
   <style>
     :root {
-      color-scheme: light;
-      --ink: #173433;
-      --sea: #17645d;
-      --sea-deep: #153d3b;
-      --foam: #f3f5e9;
-      --paper: #fffdf3;
-      --coral: #f0785b;
-      --sun: #f5c84c;
-      --muted: #71827a;
-      --line: rgba(23, 52, 51, .16);
-      --shadow: 0 24px 70px rgba(8, 36, 34, .26);
+      color-scheme: dark;
+      --ink: #e8efeb;
+      --sea: #214c48;
+      --sea-deep: #0b1514;
+      --foam: #e4eee8;
+      --paper: #121d1c;
+      --coral: #fa8064;
+      --sun: #f2c95d;
+      --muted: #9aada6;
+      --line: rgba(222, 239, 231, .13);
+      --shadow: 0 24px 70px rgba(0, 0, 0, .42);
     }
 
     * { box-sizing: border-box; }
@@ -26,12 +26,12 @@
       min-width: 320px;
       min-height: 100vh;
       margin: 0;
-      padding: 34px 20px;
+      padding: 24px 20px;
       display: grid;
       place-items: center;
       color: var(--ink);
-      background-color: #dce8d9;
-      background-image: repeating-linear-gradient(135deg, rgba(23, 100, 93, .055) 0 1px, transparent 1px 13px), linear-gradient(145deg, #e7eedf, #bed7c8);
+      background-color: #0b1514;
+      background-image: repeating-linear-gradient(135deg, rgba(118, 166, 147, .045) 0 1px, transparent 1px 13px), linear-gradient(145deg, #172725, #091110);
       font-family: "Trebuchet MS", "Segoe UI", sans-serif;
     }
 
@@ -41,31 +41,13 @@
     .game-shell {
       width: min(100%, 880px);
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, .6);
+      border: 1px solid rgba(222, 239, 231, .12);
       border-radius: 12px;
       background: var(--paper);
       box-shadow: var(--shadow);
     }
 
-    .topbar {
-      min-height: 78px;
-      padding: 18px 30px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      color: var(--foam);
-      background: var(--sea-deep);
-      border-bottom: 4px solid var(--sun);
-    }
-
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .brand-mark { font-size: 28px; line-height: 1; }
-    .brand-name { margin: 0; font-family: Georgia, serif; font-size: 23px; font-weight: 700; letter-spacing: 0; }
-    .brand-kicker { margin-top: 3px; color: #b7cec0; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; }
-    .session-label { color: #c9d9ce; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
-
-    .dashboard { padding: 22px 30px 28px; }
+    .dashboard { padding: 30px; }
     .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
     .stat {
       min-height: 76px;
@@ -76,7 +58,7 @@
       gap: 10px;
       border: 1px solid var(--line);
       border-radius: 7px;
-      background: #f5f5eb;
+      background: #1a2927;
     }
     .stat-label { display: block; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: 1.2px; }
     .stat-value { display: block; margin-top: 4px; font-variant-numeric: tabular-nums; font-size: 24px; font-weight: 800; }
@@ -85,14 +67,13 @@
 
     .machine {
       position: relative;
-      padding: 27px 24px 23px;
-      border: 1px solid #1c625a;
+      padding: 25px 24px 21px;
+      border: 1px solid #315d55;
       border-radius: 9px;
-      background-color: var(--sea);
+      background-color: #193431;
       background-image: repeating-linear-gradient(0deg, transparent 0 23px, rgba(255,255,255,.035) 24px 25px);
-      box-shadow: inset 0 1px rgba(255,255,255,.18), 0 5px 0 #104b45;
+      box-shadow: inset 0 1px rgba(255,255,255,.08), 0 5px 0 #102522;
     }
-    .machine-heading { margin: 0 0 19px; color: #d5e7d6; text-align: center; font-size: 10px; font-weight: 800; letter-spacing: 2px; }
     .reels {
       position: relative;
       display: grid;
@@ -114,7 +95,7 @@
       overflow: hidden;
       border: 1px solid #e6e2ca;
       border-radius: 6px;
-      background: linear-gradient(150deg, #fffef4, #e9ead9);
+      background: linear-gradient(150deg, #e9e8d9, #cdd3c4);
       box-shadow: inset 0 3px 8px rgba(23,52,51,.11), 0 2px 0 rgba(0,0,0,.18);
     }
     .reel-window::after { position: absolute; inset: 0; content: ""; pointer-events: none; background: linear-gradient(180deg, rgba(255,255,255,.38), transparent 24%, transparent 76%, rgba(23,52,51,.06)); }
@@ -147,52 +128,62 @@
     .mobile-bet { display: none; }
     .stepper { display: flex; align-items: center; gap: 5px; }
     .stepper button {
-      width: 34px; height: 34px; display: grid; place-items: center;
-      border: 1px solid var(--line); border-radius: 5px; color: var(--ink); background: #f4f4ea;
-      cursor: pointer; font-size: 19px; font-weight: 700;
+      width: 42px; height: 42px; display: grid; place-items: center;
+      border: 1px solid rgba(222, 239, 231, .18); border-radius: 7px; color: var(--ink); background: #263936;
+      cursor: pointer; font-size: 21px; font-weight: 700;
     }
-    .stepper button:hover:not(:disabled) { background: #e8eee2; }
+    .stepper button:hover:not(:disabled) { border-color: var(--sun); background: #344a45; transform: translateY(-1px); }
     button:disabled { opacity: .45; cursor: not-allowed; }
 
     .spin-button {
-      min-width: 174px; min-height: 56px; padding: 0 23px;
-      border: 0; border-bottom: 4px solid #c85b43; border-radius: 6px;
-      color: #fffdf3; background: var(--coral); cursor: pointer;
+      min-width: 194px; min-height: 60px; padding: 0 26px;
+      border: 1px solid #ffe08a; border-bottom: 4px solid #b88b2c; border-radius: 8px;
+      color: #17201b; background: var(--sun); cursor: pointer;
       font-size: 14px; font-weight: 900; letter-spacing: 1px;
-      transition: transform .15s ease, background .15s ease;
+      box-shadow: 0 7px 18px rgba(242, 201, 93, .16);
+      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
     }
-    .spin-button:hover:not(:disabled) { transform: translateY(-2px); background: #e96c50; }
+    .spin-button:hover:not(:disabled) { transform: translateY(-2px); background: #ffdb77; box-shadow: 0 10px 24px rgba(242, 201, 93, .24); }
     .spin-button:active:not(:disabled) { transform: translateY(1px); border-bottom-width: 2px; }
     .spin-button:disabled { border-bottom-width: 0; }
 
     .quick-control { display: flex; align-items: center; justify-content: flex-end; gap: 9px; color: var(--muted); font-size: 12px; font-weight: 700; }
     .toggle {
       width: 42px; height: 24px; padding: 3px; border: 0; border-radius: 20px;
-      background: #c6d0c5; cursor: pointer; transition: background .18s ease;
+      background: #354541; cursor: pointer; transition: background .18s ease;
     }
     .toggle::before { display: block; width: 18px; height: 18px; border-radius: 50%; content: ""; background: white; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform .18s ease; }
-    .toggle[aria-pressed="true"] { background: var(--sea); }
+    .toggle[aria-pressed="true"] { background: var(--coral); }
     .toggle[aria-pressed="true"]::before { transform: translateX(18px); }
 
     .paytable { margin-top: 27px; }
     .section-heading { margin: 0 0 11px; display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 10px; font-weight: 900; letter-spacing: 1.4px; }
     .payouts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
-    .payout { padding: 11px 5px 10px; text-align: center; background: #faf9ef; border-right: 1px solid var(--line); }
+    .payout { padding: 11px 5px 10px; text-align: center; background: #192624; border-right: 1px solid var(--line); }
     .payout:last-child { border-right: 0; }
     .payout-symbol { display: block; font-size: 23px; }
     .payout-name { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; font-weight: 700; }
-    .payout-value { display: block; margin-top: 3px; color: var(--sea); font-size: 12px; font-weight: 900; }
+    .payout-value { display: block; margin-top: 3px; color: var(--sun); font-size: 12px; font-weight: 900; }
     .payout-note { margin: 9px 0 0; color: var(--muted); font-size: 11px; text-align: center; }
+    .leaderboard { margin-top: 25px; padding-top: 19px; border-top: 1px solid var(--line); }
+    .leaderboard-heading { margin: 0 0 11px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .leaderboard-title { margin: 0; color: var(--foam); font-size: 12px; font-weight: 900; letter-spacing: 1.2px; }
+    .board-scope { color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: 1px; }
+    .leaderboard-list { margin: 0; padding: 0; display: grid; gap: 5px; list-style: none; }
+    .leaderboard-row { min-height: 42px; padding: 7px 11px; display: grid; grid-template-columns: 34px 1fr 76px auto; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 6px; background: rgba(255,255,255,.035); }
+    .score-rank { color: var(--sun); font-size: 11px; font-weight: 900; }
+    .score-name { color: var(--foam); font-size: 12px; font-weight: 800; }
+    .score-date { color: var(--muted); font-size: 10px; }
+    .score-value { color: var(--sun); font-size: 12px; font-weight: 900; text-align: right; }
+    .leaderboard-empty { margin: 0; padding: 13px 11px; color: var(--muted); font-size: 12px; text-align: center; }
     .footer { margin-top: 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); font-size: 10px; }
-    .reset-button { padding: 5px 0; border: 0; color: var(--sea); background: transparent; cursor: pointer; font-size: 11px; font-weight: 800; text-decoration: underline; text-underline-offset: 2px; }
+    .reset-button { padding: 7px 10px; border: 1px solid var(--line); border-radius: 5px; color: var(--foam); background: #233330; cursor: pointer; font-size: 11px; font-weight: 800; }
+    .reset-button:hover { border-color: var(--coral); background: #30413d; }
     .reset-button[hidden] { display: none; }
 
     @media (max-width: 600px) {
       body { padding: 12px; }
-      .topbar { min-height: 68px; padding: 14px 17px; }
-      .brand-name { font-size: 20px; }
-      .session-label { font-size: 9px; }
-      .dashboard { padding: 17px 15px 20px; }
+      .dashboard { padding: 18px 15px 20px; }
       .stats { gap: 8px; margin-bottom: 15px; }
       .stat { min-height: 68px; padding: 10px 11px; }
       .stat-value { font-size: 21px; }
@@ -207,6 +198,8 @@
       .payout { padding-left: 2px; padding-right: 2px; }
       .payout-symbol { font-size: 20px; }
       .payout-name { font-size: 9px; }
+      .leaderboard-row { grid-template-columns: 28px 1fr auto; gap: 7px; padding-right: 8px; padding-left: 8px; }
+      .score-date { display: none; }
       .footer { font-size: 9px; }
     }
 
@@ -217,17 +210,6 @@
 </head>
 <body>
   <main class="game-shell" aria-label="Tideline ocean slot machine">
-    <header class="topbar">
-      <div class="brand">
-        <span class="brand-mark" aria-hidden="true">&#127754;</span>
-        <div>
-          <h1 class="brand-name">Tideline</h1>
-          <div class="brand-kicker">OCEAN SLOTS</div>
-        </div>
-      </div>
-      <span class="session-label">The deep pays well</span>
-    </header>
-
     <section class="dashboard" aria-label="Game">
       <div class="stats" aria-live="polite">
         <div class="stat">
@@ -241,7 +223,6 @@
       </div>
 
       <section class="machine" aria-label="Slot reels">
-        <p class="machine-heading">THREE REELS. ONE GOOD TIDE.</p>
         <div class="reels" id="reels" aria-label="Slot results">
           <div class="reel-window"><span class="symbol" id="reel-0" aria-label="Shell">&#128026;</span></div>
           <div class="reel-window"><span class="symbol" id="reel-1" aria-label="Pearl">&#129450;</span></div>
@@ -277,6 +258,14 @@
         </div>
         <p class="payout-note">Any pair returns half your bet. Tokens are just for fun.</p>
       </section>
+      <section class="leaderboard" aria-labelledby="leaderboard-title">
+        <div class="leaderboard-heading">
+          <h2 class="leaderboard-title" id="leaderboard-title">TOP WINS</h2>
+          <span class="board-scope">THIS BROWSER</span>
+        </div>
+        <ol class="leaderboard-list" id="leaderboard-list" aria-label="Top wins"></ol>
+        <p class="leaderboard-empty" id="leaderboard-empty">Win tokens to set your first record.</p>
+      </section>
       <footer class="footer">
         <span>Just a little luck from the sea.</span>
         <button type="button" class="reset-button" id="reset" hidden>Refill 500 tokens</button>
@@ -304,6 +293,9 @@
     const resetButton = document.getElementById('reset');
     const quickToggle = document.getElementById('quick-toggle');
     const storageKey = 'tideline-slot-state';
+    const scoreKey = 'tideline-slot-scores';
+    const leaderboardListEl = document.getElementById('leaderboard-list');
+    const leaderboardEmptyEl = document.getElementById('leaderboard-empty');
     const bets = [10, 20, 50, 100];
     let balance = 500;
     let betIndex = 0;
@@ -337,6 +329,54 @@
       } catch {
         // Private browsing may block storage; gameplay remains available.
       }
+    }
+
+    function renderLeaderboard() {
+      let scores = [];
+      try {
+        const savedScores = JSON.parse(localStorage.getItem(scoreKey));
+        if (Array.isArray(savedScores)) {
+          scores = savedScores
+            .filter(entry => Number.isSafeInteger(entry?.amount) && entry.amount > 0 && Number.isFinite(entry?.time))
+            .sort((first, second) => second.amount - first.amount || second.time - first.time)
+            .slice(0, 5);
+        }
+      } catch {
+        // The leaderboard is optional when storage is unavailable.
+      }
+
+      leaderboardListEl.replaceChildren();
+      leaderboardEmptyEl.hidden = scores.length > 0;
+      scores.forEach((entry, index) => {
+        const row = document.createElement('li');
+        row.className = 'leaderboard-row';
+        const fields = [
+          ['score-rank', String(index + 1).padStart(2, '0')],
+          ['score-name', 'YOU'],
+          ['score-date', new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric' }).format(entry.time)],
+          ['score-value', `${formatNumber(entry.amount)} tokens`]
+        ];
+        fields.forEach(([className, text]) => {
+          const cell = document.createElement('span');
+          cell.className = className;
+          cell.textContent = text;
+          row.append(cell);
+        });
+        leaderboardListEl.append(row);
+      });
+    }
+
+    function recordWin(amount) {
+      try {
+        const savedScores = JSON.parse(localStorage.getItem(scoreKey));
+        const scores = Array.isArray(savedScores) ? savedScores : [];
+        scores.push({ amount, time: Date.now() });
+        scores.sort((first, second) => second.amount - first.amount || second.time - first.time);
+        localStorage.setItem(scoreKey, JSON.stringify(scores.slice(0, 5)));
+      } catch {
+        // Keep the game playable when storage is unavailable.
+      }
+      renderLeaderboard();
     }
 
     function setMessage(text, outcome = '') {
@@ -394,6 +434,7 @@
       }
 
       balance += winnings;
+      if (winnings > 0) recordWin(winnings);
       lastWinEl.innerHTML = `${formatNumber(winnings)} <small>tokens</small>`;
       isSpinning = false;
       updateDisplay();
@@ -426,6 +467,7 @@
       }
     });
 
+    renderLeaderboard();
     updateDisplay();
   </script>
 </body>
