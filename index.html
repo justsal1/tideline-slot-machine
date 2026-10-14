@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153d3b">
+  <title>Tideline - Ocean Slots</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #173433;
+      --sea: #17645d;
+      --sea-deep: #153d3b;
+      --foam: #f3f5e9;
+      --paper: #fffdf3;
+      --coral: #f0785b;
+      --sun: #f5c84c;
+      --muted: #71827a;
+      --line: rgba(23, 52, 51, .16);
+      --shadow: 0 24px 70px rgba(8, 36, 34, .26);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      padding: 34px 20px;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      background-color: #dce8d9;
+      background-image: repeating-linear-gradient(135deg, rgba(23, 100, 93, .055) 0 1px, transparent 1px 13px), linear-gradient(145deg, #e7eedf, #bed7c8);
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    }
+
+    button { font: inherit; }
+    button:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
+
+    .game-shell {
+      width: min(100%, 880px);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .6);
+      border-radius: 12px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .topbar {
+      min-height: 78px;
+      padding: 18px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--foam);
+      background: var(--sea-deep);
+      border-bottom: 4px solid var(--sun);
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark { font-size: 28px; line-height: 1; }
+    .brand-name { margin: 0; font-family: Georgia, serif; font-size: 23px; font-weight: 700; letter-spacing: 0; }
+    .brand-kicker { margin-top: 3px; color: #b7cec0; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; }
+    .session-label { color: #c9d9ce; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+
+    .dashboard { padding: 22px 30px 28px; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .stat {
+      min-height: 76px;
+      padding: 13px 17px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #f5f5eb;
+    }
+    .stat-label { display: block; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: 1.2px; }
+    .stat-value { display: block; margin-top: 4px; font-variant-numeric: tabular-nums; font-size: 24px; font-weight: 800; }
+    .stat-value small { color: var(--muted); font-size: 12px; }
+    .stat-icon { font-size: 24px; }
+
+    .machine {
+      position: relative;
+      padding: 27px 24px 23px;
+      border: 1px solid #1c625a;
+      border-radius: 9px;
+      background-color: var(--sea);
+      background-image: repeating-linear-gradient(0deg, transparent 0 23px, rgba(255,255,255,.035) 24px 25px);
+      box-shadow: inset 0 1px rgba(255,255,255,.18), 0 5px 0 #104b45;
+    }
+    .machine-heading { margin: 0 0 19px; color: #d5e7d6; text-align: center; font-size: 10px; font-weight: 800; letter-spacing: 2px; }
+    .reels {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 13px;
+      overflow: hidden;
+      border: 1px solid rgba(245, 200, 76, .8);
+      border-radius: 8px;
+      background: #103b39;
+      box-shadow: inset 0 5px 14px rgba(0,0,0,.35), 0 2px rgba(255,255,255,.13);
+    }
+    .reel-window {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      min-width: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid #e6e2ca;
+      border-radius: 6px;
+      background: linear-gradient(150deg, #fffef4, #e9ead9);
+      box-shadow: inset 0 3px 8px rgba(23,52,51,.11), 0 2px 0 rgba(0,0,0,.18);
+    }
+    .reel-window::after { position: absolute; inset: 0; content: ""; pointer-events: none; background: linear-gradient(180deg, rgba(255,255,255,.38), transparent 24%, transparent 76%, rgba(23,52,51,.06)); }
+    .symbol { z-index: 1; font-size: clamp(46px, 10vw, 86px); line-height: 1; filter: drop-shadow(0 4px 1px rgba(23,52,51,.12)); }
+    .reel-window.spinning .symbol { animation: reel-blur .12s linear infinite alternate; filter: blur(1px); }
+    .reel-window.stopped { animation: land .24s ease-out; }
+    .reels.winner .reel-window { border-color: var(--sun); box-shadow: 0 0 0 2px var(--sun), 0 0 22px rgba(245,200,76,.52); }
+    @keyframes reel-blur { to { transform: translateY(12px) scaleY(.88); opacity: .72; } }
+    @keyframes land { 0% { transform: translateY(-9px); } 65% { transform: translateY(3px); } 100% { transform: translateY(0); } }
+
+    .message {
+      min-height: 42px;
+      margin: 14px 0 0;
+      display: grid;
+      place-items: center;
+      color: #f6e7a9;
+      text-align: center;
+      font-family: Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .message.win { color: #ffe17a; animation: announce .35s ease-out; }
+    .message.loss { color: #d4e4d7; }
+    @keyframes announce { from { transform: scale(.94); opacity: .4; } to { transform: scale(1); opacity: 1; } }
+
+    .controls { margin-top: 23px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 14px; }
+    .bet-control { display: flex; align-items: center; gap: 10px; }
+    .bet-copy { margin-right: 3px; }
+    .bet-amount { display: block; margin-top: 3px; font-size: 17px; font-weight: 800; }
+    .mobile-bet { display: none; }
+    .stepper { display: flex; align-items: center; gap: 5px; }
+    .stepper button {
+      width: 34px; height: 34px; display: grid; place-items: center;
+      border: 1px solid var(--line); border-radius: 5px; color: var(--ink); background: #f4f4ea;
+      cursor: pointer; font-size: 19px; font-weight: 700;
+    }
+    .stepper button:hover:not(:disabled) { background: #e8eee2; }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+
+    .spin-button {
+      min-width: 174px; min-height: 56px; padding: 0 23px;
+      border: 0; border-bottom: 4px solid #c85b43; border-radius: 6px;
+      color: #fffdf3; background: var(--coral); cursor: pointer;
+      font-size: 14px; font-weight: 900; letter-spacing: 1px;
+      transition: transform .15s ease, background .15s ease;
+    }
+    .spin-button:hover:not(:disabled) { transform: translateY(-2px); background: #e96c50; }
+    .spin-button:active:not(:disabled) { transform: translateY(1px); border-bottom-width: 2px; }
+    .spin-button:disabled { border-bottom-width: 0; }
+
+    .quick-control { display: flex; align-items: center; justify-content: flex-end; gap: 9px; color: var(--muted); font-size: 12px; font-weight: 700; }
+    .toggle {
+      width: 42px; height: 24px; padding: 3px; border: 0; border-radius: 20px;
+      background: #c6d0c5; cursor: pointer; transition: background .18s ease;
+    }
+    .toggle::before { display: block; width: 18px; height: 18px; border-radius: 50%; content: ""; background: white; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform .18s ease; }
+    .toggle[aria-pressed="true"] { background: var(--sea); }
+    .toggle[aria-pressed="true"]::before { transform: translateX(18px); }
+
+    .paytable { margin-top: 27px; }
+    .section-heading { margin: 0 0 11px; display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 10px; font-weight: 900; letter-spacing: 1.4px; }
+    .payouts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+    .payout { padding: 11px 5px 10px; text-align: center; background: #faf9ef; border-right: 1px solid var(--line); }
+    .payout:last-child { border-right: 0; }
+    .payout-symbol { display: block; font-size: 23px; }
+    .payout-name { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; font-weight: 700; }
+    .payout-value { display: block; margin-top: 3px; color: var(--sea); font-size: 12px; font-weight: 900; }
+    .payout-note { margin: 9px 0 0; color: var(--muted); font-size: 11px; text-align: center; }
+    .footer { margin-top: 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); font-size: 10px; }
+    .reset-button { padding: 5px 0; border: 0; color: var(--sea); background: transparent; cursor: pointer; font-size: 11px; font-weight: 800; text-decoration: underline; text-underline-offset: 2px; }
+    .reset-button[hidden] { display: none; }
+
+    @media (max-width: 600px) {
+      body { padding: 12px; }
+      .topbar { min-height: 68px; padding: 14px 17px; }
+      .brand-name { font-size: 20px; }
+      .session-label { font-size: 9px; }
+      .dashboard { padding: 17px 15px 20px; }
+      .stats { gap: 8px; margin-bottom: 15px; }
+      .stat { min-height: 68px; padding: 10px 11px; }
+      .stat-value { font-size: 21px; }
+      .machine { padding: 20px 13px 17px; }
+      .reels { gap: 7px; padding: 8px; }
+      .controls { grid-template-columns: 1fr auto; gap: 15px 8px; }
+      .bet-control { gap: 7px; }
+      .bet-copy { display: none; }
+      .mobile-bet { display: block; margin: 0; }
+      .spin-button { grid-column: 1 / -1; grid-row: 2; width: 100%; }
+      .quick-control { grid-column: 2; grid-row: 1; }
+      .payout { padding-left: 2px; padding-right: 2px; }
+      .payout-symbol { font-size: 20px; }
+      .payout-name { font-size: 9px; }
+      .footer { font-size: 9px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="game-shell" aria-label="Tideline ocean slot machine">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">&#127754;</span>
+        <div>
+          <h1 class="brand-name">Tideline</h1>
+          <div class="brand-kicker">OCEAN SLOTS</div>
+        </div>
+      </div>
+      <span class="session-label">The deep pays well</span>
+    </header>
+
+    <section class="dashboard" aria-label="Game">
+      <div class="stats" aria-live="polite">
+        <div class="stat">
+          <div><span class="stat-label">YOUR TOKENS</span><strong class="stat-value" id="balance">500</strong></div>
+          <span class="stat-icon" aria-hidden="true">&#129689;</span>
+        </div>
+        <div class="stat">
+          <div><span class="stat-label">LAST WIN</span><strong class="stat-value" id="last-win">0 <small>tokens</small></strong></div>
+          <span class="stat-icon" aria-hidden="true">&#10024;</span>
+        </div>
+      </div>
+
+      <section class="machine" aria-label="Slot reels">
+        <p class="machine-heading">THREE REELS. ONE GOOD TIDE.</p>
+        <div class="reels" id="reels" aria-label="Slot results">
+          <div class="reel-window"><span class="symbol" id="reel-0" aria-label="Shell">&#128026;</span></div>
+          <div class="reel-window"><span class="symbol" id="reel-1" aria-label="Pearl">&#129450;</span></div>
+          <div class="reel-window"><span class="symbol" id="reel-2" aria-label="Lucky seven">7</span></div>
+        </div>
+        <p class="message" id="message" role="status" aria-live="polite">Ready when you are.</p>
+      </section>
+
+      <div class="controls">
+        <div class="bet-control" aria-label="Bet amount">
+          <div class="bet-copy"><span class="stat-label">BET</span><strong class="bet-amount"><span id="bet">10</span> tokens</strong></div>
+          <div class="stepper">
+            <button type="button" id="bet-down" aria-label="Lower bet">&#8722;</button>
+            <strong class="bet-amount mobile-bet"><span id="mobile-bet">10</span></strong>
+            <button type="button" id="bet-up" aria-label="Raise bet">+</button>
+          </div>
+        </div>
+        <button type="button" class="spin-button" id="spin">SPIN &#183; 10 TOKENS</button>
+        <div class="quick-control">
+          <span>Quick spin</span>
+          <button type="button" class="toggle" id="quick-toggle" aria-label="Quick spin" aria-pressed="false"></button>
+        </div>
+      </div>
+
+      <section class="paytable" aria-label="Payout table">
+        <h2 class="section-heading"><span>THREE OF A KIND</span><span>WIN MULTIPLIER</span></h2>
+        <div class="payouts">
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#55;&#65039;&#8419;</span><span class="payout-name">Lucky 7</span><strong class="payout-value">30x</strong></div>
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#129450;</span><span class="payout-name">Pearl</span><strong class="payout-value">15x</strong></div>
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#128032;</span><span class="payout-name">Fish</span><strong class="payout-value">10x</strong></div>
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#129408;</span><span class="payout-name">Crab</span><strong class="payout-value">7x</strong></div>
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#128026;</span><span class="payout-name">Shell</span><strong class="payout-value">5x</strong></div>
+        </div>
+        <p class="payout-note">Any pair returns half your bet. Tokens are just for fun.</p>
+      </section>
+      <footer class="footer">
+        <span>Just a little luck from the sea.</span>
+        <button type="button" class="reset-button" id="reset" hidden>Refill 500 tokens</button>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    const symbols = [
+      { icon: '\u{1F41A}', name: 'Shell', payout: 5 },
+      { icon: '\u{1F9AA}', name: 'Pearl', payout: 15 },
+      { icon: '\u{1F420}', name: 'Fish', payout: 10 },
+      { icon: '\u{1F980}', name: 'Crab', payout: 7 },
+      { icon: '7\uFE0F\u20E3', name: 'Lucky seven', payout: 30 }
+    ];
+    const reelWindows = [...document.querySelectorAll('.reel-window')];
+    const reelSymbols = [...document.querySelectorAll('.symbol')];
+    const reels = document.getElementById('reels');
+    const balanceEl = document.getElementById('balance');
+    const lastWinEl = document.getElementById('last-win');
+    const betEl = document.getElementById('bet');
+    const mobileBetEl = document.getElementById('mobile-bet');
+    const spinButton = document.getElementById('spin');
+    const messageEl = document.getElementById('message');
+    const resetButton = document.getElementById('reset');
+    const quickToggle = document.getElementById('quick-toggle');
+    const storageKey = 'tideline-slot-state';
+    const bets = [10, 20, 50, 100];
+    let balance = 500;
+    let betIndex = 0;
+    let isSpinning = false;
+    let quickSpin = false;
+
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(storageKey));
+      if (Number.isSafeInteger(saved?.balance) && saved.balance >= 0) balance = saved.balance;
+      if (bets.includes(saved?.bet)) betIndex = bets.indexOf(saved.bet);
+    } catch {
+      // Storage is optional; the game still works for this session.
+    }
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat().format(value);
+    }
+
+    function updateDisplay() {
+      const bet = bets[betIndex];
+      balanceEl.textContent = formatNumber(balance);
+      betEl.textContent = bet;
+      mobileBetEl.textContent = bet;
+      spinButton.textContent = `SPIN \u00b7 ${bet} TOKENS`;
+      spinButton.disabled = isSpinning || balance < bet;
+      document.getElementById('bet-down').disabled = isSpinning || betIndex === 0;
+      document.getElementById('bet-up').disabled = isSpinning || betIndex === bets.length - 1;
+      resetButton.hidden = balance >= bets[0] || isSpinning;
+      try {
+        sessionStorage.setItem(storageKey, JSON.stringify({ balance, bet }));
+      } catch {
+        // Private browsing may block storage; gameplay remains available.
+      }
+    }
+
+    function setMessage(text, outcome = '') {
+      messageEl.textContent = text;
+      messageEl.className = `message ${outcome}`;
+    }
+
+    function wait(milliseconds) {
+      return new Promise(resolve => window.setTimeout(resolve, milliseconds));
+    }
+
+    async function spin() {
+      if (isSpinning || balance < bets[betIndex]) return;
+      isSpinning = true;
+      reels.classList.remove('winner');
+      const wager = bets[betIndex];
+      balance -= wager;
+      lastWinEl.innerHTML = '0 <small>tokens</small>';
+      setMessage('The current is turning...');
+      updateDisplay();
+
+      const results = reelWindows.map(() => symbols[Math.floor(Math.random() * symbols.length)]);
+      const speed = quickSpin ? 280 : 720;
+      const timers = reelSymbols.map((symbolEl, index) => {
+        reelWindows[index].classList.add('spinning');
+        return window.setInterval(() => {
+          symbolEl.textContent = symbols[Math.floor(Math.random() * symbols.length)].icon;
+        }, 80);
+      });
+
+      for (let index = 0; index < reelWindows.length; index += 1) {
+        await wait(speed + index * (quickSpin ? 70 : 240));
+        window.clearInterval(timers[index]);
+        reelSymbols[index].textContent = results[index].icon;
+        reelSymbols[index].setAttribute('aria-label', results[index].name);
+        reelWindows[index].classList.remove('spinning');
+        reelWindows[index].classList.add('stopped');
+        window.setTimeout(() => reelWindows[index].classList.remove('stopped'), 260);
+      }
+
+      const counts = results.reduce((map, symbol) => map.set(symbol.name, (map.get(symbol.name) || 0) + 1), new Map());
+      const triple = results[0].name === results[1].name && results[1].name === results[2].name;
+      const pair = [...counts.values()].some(count => count === 2);
+      let winnings = 0;
+
+      if (triple) {
+        winnings = wager * results[0].payout;
+        reels.classList.add('winner');
+        setMessage(`${results[0].name} jackpot! +${formatNumber(winnings)} tokens`, 'win');
+      } else if (pair) {
+        winnings = Math.floor(wager / 2);
+        setMessage(`A matching pair! +${formatNumber(winnings)} tokens`, 'win');
+      } else {
+        setMessage(balance === 0 ? 'Out of tokens. Refill for another round.' : 'No match this time. Try the tide again.', 'loss');
+      }
+
+      balance += winnings;
+      lastWinEl.innerHTML = `${formatNumber(winnings)} <small>tokens</small>`;
+      isSpinning = false;
+      updateDisplay();
+    }
+
+    document.getElementById('bet-down').addEventListener('click', () => {
+      if (betIndex > 0 && !isSpinning) betIndex -= 1;
+      updateDisplay();
+    });
+    document.getElementById('bet-up').addEventListener('click', () => {
+      if (betIndex < bets.length - 1 && !isSpinning) betIndex += 1;
+      updateDisplay();
+    });
+    spinButton.addEventListener('click', spin);
+    quickToggle.addEventListener('click', () => {
+      quickSpin = !quickSpin;
+      quickToggle.setAttribute('aria-pressed', String(quickSpin));
+    });
+    resetButton.addEventListener('click', () => {
+      if (isSpinning) return;
+      balance = 500;
+      lastWinEl.innerHTML = '0 <small>tokens</small>';
+      setMessage('A fresh tide. Good luck!');
+      updateDisplay();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.code === 'Space' && !event.repeat && !['BUTTON', 'INPUT'].includes(document.activeElement.tagName)) {
+        event.preventDefault();
+        spin();
+      }
+    });
+
+    updateDisplay();
+  </script>
+</body>
+</html>
