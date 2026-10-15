@@ -23,7 +23,7 @@
     * { box-sizing: border-box; }
 
     body {
-      min-width: 320px;
+      min-width: 0;
       min-height: 100vh;
       margin: 0;
       padding: 24px 20px;
@@ -35,8 +35,8 @@
       font-family: "Trebuchet MS", "Segoe UI", sans-serif;
     }
 
-    button { font: inherit; }
-    button:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
+    button { font: inherit; touch-action: manipulation; }
+    button:focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; }
 
     .game-shell {
       width: min(100%, 880px);
@@ -47,30 +47,30 @@
       box-shadow: var(--shadow);
     }
 
-    .dashboard { padding: 30px; }
-    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 19px; }
+    .dashboard { padding: 26px 30px 30px; }
+    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; margin-bottom: 15px; }
     .stat {
-      min-height: 76px;
-      padding: 13px 17px;
+      min-height: 60px;
+      padding: 9px 13px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
       border: 1px solid var(--line);
       border-radius: 7px;
-      background: #251c30;
+      background: linear-gradient(145deg, #2b2038, #21182c);
     }
     .stat-label { display: block; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: 1.2px; }
-    .stat-value { display: block; margin-top: 4px; font-variant-numeric: tabular-nums; font-size: 24px; font-weight: 800; }
+    .stat-value { display: block; margin-top: 2px; font-variant-numeric: tabular-nums; font-size: 21px; font-weight: 800; }
     .stat-value small { color: var(--muted); font-size: 12px; }
-    .stat-icon { font-size: 24px; }
+    .stat-icon { font-size: 20px; }
 
     .machine {
       position: relative;
       padding: 22px 20px 18px;
-      border: 1px solid #604773;
+      border: 1px solid #76579b;
       border-radius: 9px;
-      background-color: #281d35;
+      background-color: #281d38;
       background-image: repeating-linear-gradient(0deg, transparent 0 23px, rgba(255,255,255,.035) 24px 25px);
       box-shadow: inset 0 1px rgba(255,255,255,.08), 0 5px 0 #1b1325;
     }
@@ -81,10 +81,10 @@
       gap: 10px;
       padding: 11px;
       overflow: hidden;
-      border: 1px solid rgba(245, 200, 76, .8);
+      border: 1px solid rgba(191, 151, 232, .72);
       border-radius: 8px;
-      background: #103b39;
-      box-shadow: inset 0 5px 14px rgba(0,0,0,.35), 0 2px rgba(255,255,255,.13);
+      background: linear-gradient(135deg, #352448, #20172c);
+      box-shadow: inset 0 5px 14px rgba(0,0,0,.35), 0 2px rgba(255,255,255,.09);
     }
     .reel-window {
       position: relative;
@@ -95,20 +95,22 @@
       overflow: hidden;
       border: 1px solid #d9ccdf;
       border-radius: 6px;
-      background: linear-gradient(150deg, #eee8dc, #d8cfe0);
-      box-shadow: inset 0 3px 8px rgba(23,52,51,.11), 0 2px 0 rgba(0,0,0,.18);
+      background: linear-gradient(150deg, #f0e7f6, #d9cde7);
+      box-shadow: inset 0 3px 8px rgba(42,27,53,.11), 0 2px 0 rgba(0,0,0,.18);
     }
-    .reel-window::after { position: absolute; inset: 0; content: ""; pointer-events: none; background: linear-gradient(180deg, rgba(255,255,255,.38), transparent 24%, transparent 76%, rgba(23,52,51,.06)); }
-    .symbol { z-index: 1; font-size: clamp(32px, 7vw, 64px); line-height: 1; filter: drop-shadow(0 4px 1px rgba(23,52,51,.12)); }
+    .reel-window::after { position: absolute; inset: 0; content: ""; pointer-events: none; background: linear-gradient(180deg, rgba(255,255,255,.38), transparent 24%, transparent 76%, rgba(42,27,53,.06)); }
+    .symbol { z-index: 1; font-size: clamp(32px, 7vw, 64px); line-height: 1; filter: drop-shadow(0 4px 1px rgba(42,27,53,.12)); }
     .reel-window.spinning .symbol { animation: reel-blur .12s linear infinite alternate; filter: blur(1px); }
     .reel-window.stopped { animation: land .24s ease-out; }
-    .reels.winner .reel-window { border-color: var(--sun); box-shadow: 0 0 0 2px var(--sun), 0 0 22px rgba(245,200,76,.52); }
+    .reels.winner .reel-window { border-color: var(--sun); box-shadow: 0 0 0 2px var(--sun), 0 0 22px rgba(190,151,232,.52); }
     @keyframes reel-blur { to { transform: translateY(12px) scaleY(.88); opacity: .72; } }
     @keyframes land { 0% { transform: translateY(-9px); } 65% { transform: translateY(3px); } 100% { transform: translateY(0); } }
 
+    .celebration-stage { min-height: 76px; margin-top: 8px; display: flex; align-items: center; gap: 8px; }
     .message {
+      flex: 1;
       min-height: 42px;
-      margin: 14px 0 0;
+      margin: 0;
       display: grid;
       place-items: center;
       color: #ead8ff;
@@ -117,8 +119,8 @@
       font-size: 18px;
       font-weight: 700;
     }
-    .message.win { color: #d7b3ff; animation: announce .35s ease-out; }
-    .message.loss { color: #d4e4d7; }
+    .message.win { color: #e2c8ff; animation: announce .35s ease-out; }
+    .message.loss { color: #cbbdd8; }
     @keyframes announce { from { transform: scale(.94); opacity: .4; } to { transform: scale(1); opacity: 1; } }
 
     .controls { margin-top: 23px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 14px; }
@@ -147,13 +149,15 @@
     .spin-button:active:not(:disabled) { transform: translateY(1px); border-bottom-width: 2px; }
     .spin-button:disabled { border-bottom-width: 0; }
 
+    .mode-controls { display: grid; justify-items: end; gap: 8px; }
     .quick-control { display: flex; align-items: center; justify-content: flex-end; gap: 9px; color: var(--muted); font-size: 12px; font-weight: 700; }
+    .sound-state { min-width: 28px; color: var(--muted); font-size: 10px; }
     .toggle {
       width: 42px; height: 24px; padding: 3px; border: 0; border-radius: 20px;
       background: #40334a; cursor: pointer; transition: background .18s ease;
     }
     .toggle::before { display: block; width: 18px; height: 18px; border-radius: 50%; content: ""; background: white; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform .18s ease; }
-    .toggle[aria-pressed="true"] { background: var(--sea); }
+    .toggle[aria-pressed="true"] { background: #8d68b5; }
     .toggle[aria-pressed="true"]::before { transform: translateX(18px); }
 
     .paytable { margin-top: 27px; }
@@ -176,17 +180,79 @@
     .score-record { color: var(--muted); font-size: 10px; }
     .score-value { color: var(--sun); font-size: 12px; font-weight: 900; text-align: right; }
     .leaderboard-empty { margin: 0; padding: 13px 11px; color: var(--muted); font-size: 12px; text-align: center; }
+    .puppy-closet { margin-top: 23px; padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: linear-gradient(145deg, rgba(112,78,145,.14), rgba(255,255,255,.025)); }
+    .closet-heading { margin: 0 0 4px; color: var(--foam); font-size: 12px; font-weight: 900; letter-spacing: 1.2px; }
+    .closet-copy { margin: 0 0 12px; color: var(--muted); font-size: 11px; }
+    .closet-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    .closet-item { min-width: 0; padding: 10px 7px; display: grid; justify-items: center; gap: 5px; border: 1px solid var(--line); border-radius: 7px; color: var(--foam); background: #251b30; cursor: pointer; text-align: center; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
+    .closet-item:hover:not(:disabled) { transform: translateY(-2px); border-color: #a47bc8; background: #30223f; }
+    .closet-item.equipped { border-color: #b998df; background: #392849; box-shadow: inset 0 0 0 1px rgba(185,152,223,.22); }
+    .closet-item:disabled { opacity: .55; }
+    .closet-preview { font-size: 22px; line-height: 1.2; }
+    .closet-name { font-size: 10px; font-weight: 800; }
+    .closet-cost { color: var(--sun); font-size: 10px; }
+    .closet-item.equipped .closet-cost { color: #c7e8c7; }
+    .bonus-dialog { width: min(440px, calc(100% - 28px)); padding: 24px; border: 1px solid #8e6ab2; border-radius: 14px; color: var(--ink); background: linear-gradient(145deg, #30213f, #1b1425 75%); box-shadow: 0 24px 90px #09050ddd; text-align: center; }
+    .bonus-dialog::backdrop { background: rgba(12, 7, 17, .78); backdrop-filter: blur(4px); }
+    .bonus-kicker { margin: 0 0 5px; color: #d2b4f1; font-size: 10px; font-weight: 900; letter-spacing: 1.6px; }
+    .bonus-dialog h2 { margin: 0; color: #f0e4fc; font-family: Georgia, serif; font-size: 26px; }
+    .bonus-copy { margin: 8px 0 18px; color: var(--muted); font-size: 13px; }
+    .bonus-choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .bonus-choice { min-height: 116px; padding: 12px 6px; display: grid; place-content: center; gap: 8px; border: 1px solid #654a7e; border-radius: 10px; color: #e8d7fa; background: linear-gradient(160deg, #453057, #2b2038); cursor: pointer; font-size: 11px; font-weight: 800; transition: transform .15s ease, border-color .15s ease, background .15s ease; }
+    .bonus-choice:hover { transform: translateY(-4px); border-color: #d7b3ff; background: linear-gradient(160deg, #63467a, #372647); }
+    .bonus-choice-icon { font-size: 28px; }
+    .bonus-skip { min-height: 44px; margin-top: 12px; padding: 8px 16px; border: 1px solid var(--line); border-radius: 7px; color: var(--muted); background: transparent; cursor: pointer; font-size: 12px; font-weight: 800; }
+    .bonus-skip:hover { border-color: #a47bc8; color: var(--foam); background: rgba(255,255,255,.04); }
     .footer { margin-top: 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); font-size: 10px; }
-    .reset-button { padding: 7px 10px; border: 1px solid var(--line); border-radius: 5px; color: var(--foam); background: #233330; cursor: pointer; font-size: 11px; font-weight: 800; }
-    .reset-button:hover { border-color: var(--coral); background: #30413d; }
+    .reset-button { padding: 7px 10px; border: 1px solid var(--line); border-radius: 5px; color: var(--foam); background: #30223f; cursor: pointer; font-size: 11px; font-weight: 800; }
+    .reset-button:hover { border-color: var(--coral); background: #40304f; }
     .reset-button[hidden] { display: none; }
 
+    .puppy-cheer { flex: 0 0 0; width: 0; height: 72px; display: grid; place-items: center; overflow: hidden; opacity: 0; }
+    .puppy-cheer.is-celebrating { flex-basis: 72px; width: 72px; overflow: visible; opacity: 1; }
+    .puppy-cheer svg { width: 66px; height: 66px; overflow: visible; filter: drop-shadow(0 7px 7px rgba(16, 9, 24, .36)); }
+    .puppy-cheer .cosmetic { display: none; }
+    .puppy-cheer[data-cosmetic="bow"] .cosmetic-bow,
+    .puppy-cheer[data-cosmetic="crown"] .cosmetic-crown,
+    .puppy-cheer[data-cosmetic="shades"] .cosmetic-shades,
+    .puppy-cheer[data-cosmetic="halo"] .cosmetic-halo { display: initial; }
+    .puppy-cheer.cheer-1 { animation: puppy-hop 1.8s ease-in-out; }
+    .puppy-cheer.cheer-2 { animation: puppy-twirl 1.8s ease-in-out; }
+    .puppy-cheer.cheer-3 { animation: puppy-wiggle 1.8s ease-in-out; }
+    .puppy-cheer.cheer-4 { animation: puppy-dash 1.8s ease-in-out; }
+    .puppy-cheer.cheer-5 { animation: puppy-pop 1.8s ease-in-out; }
+    .puppy-cheer.cheer-6 { animation: puppy-spin 1.8s ease-in-out; }
+    .puppy-cheer.cheer-7 { animation: puppy-shimmy 1.8s ease-in-out; }
+    .puppy-cheer.cheer-8 { animation: puppy-roll 1.8s ease-in-out; }
+    .puppy-cheer.cheer-9 { animation: puppy-boing 1.8s ease-in-out; }
+    .puppy-cheer.cheer-10 { animation: puppy-stretch 1.8s ease-in-out; }
+    .puppy-cheer.cheer-11 { animation: puppy-left-hop 1.8s ease-in-out; }
+    .puppy-cheer.cheer-12 { animation: puppy-right-hop 1.8s ease-in-out; }
+    .puppy-cheer.cheer-13 { animation: puppy-wave 1.8s ease-in-out; }
+    .puppy-cheer.cheer-14 { animation: puppy-super-bounce 1.8s ease-in-out; }
+    .puppy-cheer.cheer-15 { animation: puppy-sparkle 1.8s ease-in-out; }
+    @keyframes puppy-hop { 0%,100% { transform: translateY(0) } 35% { transform: translateY(-25px) rotate(-8deg) } 65% { transform: translateY(0) rotate(8deg) } }
+    @keyframes puppy-twirl { 0%,100% { transform: rotate(0) scale(1) } 50% { transform: rotate(360deg) scale(1.12) } }
+    @keyframes puppy-wiggle { 0%,100% { transform: rotate(0) } 20%,60% { transform: rotate(-18deg) } 40%,80% { transform: rotate(18deg) } }
+    @keyframes puppy-dash { 0%,100% { transform: translateX(0) } 25% { transform: translateX(-18px) rotate(-12deg) } 60% { transform: translateX(15px) rotate(12deg) } }
+    @keyframes puppy-pop { 0%,100% { transform: scale(1) } 35% { transform: scale(.7) } 58% { transform: scale(1.28) } 76% { transform: scale(.92) } }
+    @keyframes puppy-spin { 0%,100% { transform: rotate(0) } 50% { transform: rotate(-720deg) } }
+    @keyframes puppy-shimmy { 0%,100% { transform: translateX(0) } 20%,60% { transform: translateX(-9px) } 40%,80% { transform: translateX(9px) } }
+    @keyframes puppy-roll { 0%,100% { transform: rotate(0) translateY(0) } 40% { transform: rotate(-90deg) translateY(-12px) } 75% { transform: rotate(-180deg) translateY(0) } }
+    @keyframes puppy-boing { 0%,100% { transform: translateY(0) scaleY(1) } 30% { transform: translateY(-30px) scaleY(1.08) } 55% { transform: translateY(0) scaleY(.82) } 72% { transform: translateY(-12px) scaleY(1.03) } }
+    @keyframes puppy-stretch { 0%,100% { transform: scale(1) } 35% { transform: scale(1.18,.78) } 65% { transform: scale(.82,1.2) } }
+    @keyframes puppy-left-hop { 0%,100% { transform: translate(0,0) } 38% { transform: translate(-18px,-22px) rotate(-20deg) } 70% { transform: translate(5px,0) rotate(8deg) } }
+    @keyframes puppy-right-hop { 0%,100% { transform: translate(0,0) } 38% { transform: translate(18px,-22px) rotate(20deg) } 70% { transform: translate(-5px,0) rotate(-8deg) } }
+    @keyframes puppy-wave { 0%,100% { transform: rotate(0) translateY(0) } 25% { transform: rotate(20deg) translateY(-8px) } 50% { transform: rotate(-20deg) translateY(-14px) } 75% { transform: rotate(15deg) translateY(-5px) } }
+    @keyframes puppy-super-bounce { 0%,100% { transform: translateY(0) scale(1) } 30% { transform: translateY(-38px) scale(1.08) } 50% { transform: translateY(0) scale(.85,1.12) } 72% { transform: translateY(-18px) scale(1.02) } }
+    @keyframes puppy-sparkle { 0%,100% { transform: scale(1) rotate(0) } 25% { transform: scale(.8) rotate(35deg) } 55% { transform: scale(1.2) rotate(-25deg) } 78% { transform: scale(.94) rotate(12deg) } }
+
     @media (max-width: 600px) {
-      body { padding: 12px; }
+      body { min-height: 100svh; padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); }
       .dashboard { padding: 18px 15px 20px; }
       .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 15px; }
-      .stat { min-height: 68px; padding: 10px 11px; }
-      .stat-value { font-size: 21px; }
+      .stat { min-height: 55px; padding: 8px 10px; }
+      .stat-value { font-size: 19px; }
       .machine { padding: 20px 13px 17px; }
       .reels { gap: 5px; padding: 7px; }
       .symbol { font-size: clamp(28px, 8vw, 42px); }
@@ -195,11 +261,24 @@
       .bet-copy { display: none; }
       .mobile-bet { display: block; margin: 0; }
       .spin-button { grid-column: 1 / -1; grid-row: 2; width: 100%; }
-      .quick-control { grid-column: 2; grid-row: 1; }
+      .mode-controls { grid-column: 2; grid-row: 1; gap: 6px; }
+      .quick-control { gap: 5px; font-size: 10px; }
+      .sound-state { min-width: 22px; font-size: 9px; }
+      .stepper button { width: 44px; height: 44px; }
+      .toggle { width: 44px; height: 28px; }
+      .toggle::before { width: 20px; height: 20px; }
+      .toggle[aria-pressed="true"]::before { transform: translateX(18px); }
+      .celebration-stage { min-height: 66px; }
+      .puppy-cheer { height: 60px; }
+      .puppy-cheer.is-celebrating { flex-basis: 60px; width: 60px; }
+      .puppy-cheer svg { width: 56px; height: 56px; }
       .payout { padding-left: 2px; padding-right: 2px; }
       .payout-symbol { font-size: 20px; }
       .payout-name { font-size: 9px; }
       .leaderboard-row { grid-template-columns: 26px 1fr auto; gap: 7px; padding-right: 8px; padding-left: 8px; }
+      .closet-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .closet-item { min-height: 82px; padding: 9px 6px; }
+      .bonus-dialog { padding: 20px 15px; }
       .score-record { font-size: 9px; }
       .footer { font-size: 9px; }
     }
@@ -223,7 +302,7 @@
         </div>
         <div class="stat">
           <div><span class="stat-label">LOSSES</span><strong class="stat-value" id="loss-count">0</strong></div>
-          <span class="stat-icon" aria-hidden="true">&#127987;</span>
+          <span class="stat-icon" aria-hidden="true">&#128148;</span>
         </div>
         <div class="stat">
           <div><span class="stat-label">LAST WIN</span><strong class="stat-value" id="last-win">0 <small>tokens</small></strong></div>
@@ -234,24 +313,43 @@
       <section class="paytable" aria-label="Payout table">
         <h2 class="section-heading"><span>TOP SYMBOL PAYOUTS</span><span>BASE MULTIPLIER</span></h2>
         <div class="payouts">
-          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#55;&#65039;&#8419;</span><span class="payout-name">Lucky 7</span><strong class="payout-value">30x</strong></div>
-          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#129450;</span><span class="payout-name">Pearl</span><strong class="payout-value">15x</strong></div>
-          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#128032;</span><span class="payout-name">Fish</span><strong class="payout-value">10x</strong></div>
-          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#129408;</span><span class="payout-name">Crab</span><strong class="payout-value">7x</strong></div>
-          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#128026;</span><span class="payout-name">Shell</span><strong class="payout-value">5x</strong></div>
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#128142;</span><span class="payout-name">Gem</span><strong class="payout-value">30x</strong></div>
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#127769;</span><span class="payout-name">Moon</span><strong class="payout-value">15x</strong></div>
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#11088;</span><span class="payout-name">Star</span><strong class="payout-value">10x</strong></div>
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#129528;</span><span class="payout-name">Teddy</span><strong class="payout-value">7x</strong></div>
+          <div class="payout"><span class="payout-symbol" aria-hidden="true">&#127826;</span><span class="payout-name">Cherry</span><strong class="payout-value">5x</strong></div>
         </div>
-        <p class="payout-note">3 matches pay base · 4 pay 2x · 5 pay 3x. Any pair returns half your bet.</p>
+        <p class="payout-note">40% chance to hit a paying combo · 3 matches pay base · 4 pay 2x · 5 pay 3x. Any pair returns half your bet.</p>
       </section>
 
       <section class="machine" aria-label="Slot reels">
         <div class="reels" id="reels" aria-label="Slot results">
-          <div class="reel-window"><span class="symbol" id="reel-0" aria-label="Shell">&#128026;</span></div>
-          <div class="reel-window"><span class="symbol" id="reel-1" aria-label="Pearl">&#129450;</span></div>
-          <div class="reel-window"><span class="symbol" id="reel-2" aria-label="Fish">&#128032;</span></div>
-          <div class="reel-window"><span class="symbol" id="reel-3" aria-label="Crab">&#129408;</span></div>
-          <div class="reel-window"><span class="symbol" id="reel-4" aria-label="Lucky seven">&#55;&#65039;&#8419;</span></div>
+          <div class="reel-window"><span class="symbol" id="reel-0" aria-label="Cherry">&#127826;</span></div>
+          <div class="reel-window"><span class="symbol" id="reel-1" aria-label="Teddy">&#129528;</span></div>
+          <div class="reel-window"><span class="symbol" id="reel-2" aria-label="Star">&#11088;</span></div>
+          <div class="reel-window"><span class="symbol" id="reel-3" aria-label="Moon">&#127769;</span></div>
+          <div class="reel-window"><span class="symbol" id="reel-4" aria-label="Gem">&#128142;</span></div>
         </div>
-        <p class="message" id="message" role="status" aria-live="polite">Ready when you are.</p>
+        <div class="celebration-stage">
+          <p class="message" id="message" role="status" aria-live="polite">Ready when you are.</p>
+          <div class="puppy-cheer" id="puppy-cheer" aria-hidden="true">
+            <svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 43c-9-4-13-14-10-23 1-4 4-5 7-2l14 12M72 43c9-4 13-14 10-23-1-4-4-5-7-2L61 30" fill="#bd9de8" stroke="#6b4d8e" stroke-width="3" stroke-linecap="round"/>
+              <path d="M20 42c0-17 12-27 28-27s28 10 28 27v13c0 16-12 27-28 27S20 71 20 55z" fill="#f4eaf9" stroke="#6b4d8e" stroke-width="3"/>
+              <path d="M15 23c3-5 7-3 10 1l6 8-10 9c-8-5-10-12-6-18zm66 0c-3-5-7-3-10 1l-6 8 10 9c8-5 10-12 6-18z" fill="#d8bfe8" stroke="#6b4d8e" stroke-width="2"/>
+              <path d="M33 48c3-4 7-4 10 0m10 0c3-4 7-4 10 0" fill="none" stroke="#352542" stroke-width="4" stroke-linecap="round"/>
+              <path d="M43 57q5-5 10 0-1 7-5 7t-5-7z" fill="#65467e"/>
+              <path d="M48 64v4m-5-2q5 4 10 0" fill="none" stroke="#65467e" stroke-width="2" stroke-linecap="round"/>
+              <path d="M31 78q17 11 34 0v7H31z" fill="#9c72c2"/>
+              <path d="M48 81l4 4-4 7-4-7z" fill="#f3c96f" stroke="#76549b" stroke-width="1.5"/>
+              <path d="M11 53l3 3m68-3 3 3M29 12l2-5m34 5 2-5" stroke="#e7cfff" stroke-width="3" stroke-linecap="round"/>
+              <path class="cosmetic cosmetic-bow" d="M62 25q-11-10-12 0 1 7 12 3 11 4 12-3-1-10-12 0zm0 0v6" fill="#ee8fbd" stroke="#754a85" stroke-width="2" stroke-linejoin="round"/>
+              <path class="cosmetic cosmetic-crown" d="m34 25 2-12 9 8 6-12 6 12 9-8 2 12z" fill="#f3c96f" stroke="#805caa" stroke-width="2" stroke-linejoin="round"/>
+              <path class="cosmetic cosmetic-shades" d="M30 44h16v8q-8 5-13-1zm20 0h16v7q-5 6-13 1zM46 47h4" fill="#9471bd" stroke="#4d3765" stroke-width="2" stroke-linejoin="round"/>
+              <ellipse class="cosmetic cosmetic-halo" cx="48" cy="10" rx="19" ry="5" fill="none" stroke="#f3c96f" stroke-width="3"/>
+            </svg>
+          </div>
+        </div>
       </section>
 
       <div class="controls">
@@ -264,11 +362,23 @@
           </div>
         </div>
         <button type="button" class="spin-button" id="spin">SPIN &#183; 10 TOKENS</button>
-        <div class="quick-control">
-          <span>Quick spin</span>
-          <button type="button" class="toggle" id="quick-toggle" aria-label="Quick spin" aria-pressed="false"></button>
+        <div class="mode-controls">
+          <div class="quick-control">
+            <span>Sound</span><span class="sound-state" id="sound-state">On</span>
+            <button type="button" class="toggle" id="sound-toggle" aria-label="Sound on" aria-pressed="true"></button>
+          </div>
+          <div class="quick-control">
+            <span>Quick spin</span>
+            <button type="button" class="toggle" id="quick-toggle" aria-label="Quick spin" aria-pressed="false"></button>
+          </div>
         </div>
       </div>
+
+      <section class="puppy-closet" aria-labelledby="closet-title">
+        <h2 class="closet-heading" id="closet-title">PUPPY'S CLOSET</h2>
+        <p class="closet-copy">Spend your winnings on a tiny new look.</p>
+        <div class="closet-list" id="closet-list"></div>
+      </section>
 
       <section class="leaderboard" aria-labelledby="leaderboard-title">
         <div class="leaderboard-heading">
@@ -283,15 +393,22 @@
         <button type="button" class="reset-button" id="reset" hidden>Refill 500 tokens</button>
       </footer>
     </section>
+    <dialog class="bonus-dialog" id="bonus-dialog" aria-labelledby="bonus-title">
+      <p class="bonus-kicker">THREE STARS!</p>
+      <h2 id="bonus-title">Pick a lucky prize</h2>
+      <p class="bonus-copy">Choose one mystery star to reveal your bonus tokens.</p>
+      <div class="bonus-choices" id="bonus-choices"></div>
+      <button class="bonus-skip" id="bonus-skip" type="button">Skip bonus</button>
+    </dialog>
   </main>
 
   <script>
     const symbols = [
-      { icon: '\u{1F41A}', name: 'Shell', payout: 5 },
-      { icon: '\u{1F9AA}', name: 'Pearl', payout: 15 },
-      { icon: '\u{1F420}', name: 'Fish', payout: 10 },
-      { icon: '\u{1F980}', name: 'Crab', payout: 7 },
-      { icon: '7\uFE0F\u20E3', name: 'Lucky seven', payout: 30 }
+      { icon: '\u{1F352}', name: 'Cherry', payout: 5 },
+      { icon: '\u{1F9F8}', name: 'Teddy', payout: 7 },
+      { icon: '\u{2B50}', name: 'Star', payout: 10 },
+      { icon: '\u{1F319}', name: 'Moon', payout: 15 },
+      { icon: '\u{1F48E}', name: 'Gem', payout: 30 }
     ];
     const reelWindows = [...document.querySelectorAll('.reel-window')];
     const reelSymbols = [...document.querySelectorAll('.symbol')];
@@ -304,8 +421,22 @@
     const messageEl = document.getElementById('message');
     const resetButton = document.getElementById('reset');
     const quickToggle = document.getElementById('quick-toggle');
+    const soundToggle = document.getElementById('sound-toggle');
+    const soundStateEl = document.getElementById('sound-state');
+    const puppyEl = document.getElementById('puppy-cheer');
+    const closetListEl = document.getElementById('closet-list');
+    const bonusDialog = document.getElementById('bonus-dialog');
+    const bonusChoicesEl = document.getElementById('bonus-choices');
     const storageKey = 'tideline-slot-state';
     const statsKey = 'tideline-slot-stats';
+    const cosmeticsKey = 'tideline-puppy-cosmetics';
+    const cosmetics = [
+      { id: 'bow', name: 'Berry bow', icon: '\u{1F380}', cost: 0 },
+      { id: 'crown', name: 'Moon crown', icon: '\u{1F451}', cost: 120 },
+      { id: 'shades', name: 'Star shades', icon: '\u{1F60E}', cost: 250 },
+      { id: 'halo', name: 'Lucky halo', icon: '\u{1F31F}', cost: 400 }
+    ];
+    const bonusPrizes = [25, 50, 100];
     const leaderboardListEl = document.getElementById('leaderboard-list');
     const leaderboardEmptyEl = document.getElementById('leaderboard-empty');
     const winCountEl = document.getElementById('win-count');
@@ -315,9 +446,172 @@
     let betIndex = 0;
     let isSpinning = false;
     let quickSpin = false;
+    const audioSupported = Boolean(window.AudioContext || window.webkitAudioContext);
+    let soundEnabled = audioSupported;
+    let audioContext = null;
+    let puppyTimer = 0;
+    let lastPuppyAnimation = 0;
     let wins = 0;
     let losses = 0;
     let totalWon = 0;
+    let ownedCosmetics = ['bow'];
+    let equippedCosmetic = 'bow';
+
+    function syncSoundControl() {
+      soundToggle.setAttribute('aria-pressed', String(soundEnabled));
+      soundToggle.setAttribute('aria-label', soundEnabled ? 'Sound on' : 'Sound off');
+      soundStateEl.textContent = audioSupported ? (soundEnabled ? 'On' : 'Off') : 'N/A';
+      soundToggle.disabled = !audioSupported;
+      if (!audioSupported) soundToggle.title = 'Audio is not supported by this browser.';
+    }
+
+    function reportAudioError(error) {
+      console.error('Slot machine audio could not be played.', error);
+      soundEnabled = false;
+      syncSoundControl();
+    }
+
+    function unlockAudio() {
+      if (!audioSupported || !soundEnabled) return null;
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        audioContext ||= new AudioContextClass();
+        if (audioContext.state === 'suspended') {
+          audioContext.resume().catch(reportAudioError);
+        }
+        return audioContext;
+      } catch (error) {
+        reportAudioError(error);
+        return null;
+      }
+    }
+
+    function playTone(frequency, delay = 0, duration = 0.12, volume = 0.035, type = 'sine') {
+      const context = unlockAudio();
+      if (!context) return;
+      try {
+        const startAt = context.currentTime + delay;
+        const oscillator = context.createOscillator();
+        const gain = context.createGain();
+        oscillator.type = type;
+        oscillator.frequency.setValueAtTime(frequency, startAt);
+        gain.gain.setValueAtTime(0.0001, startAt);
+        gain.gain.exponentialRampToValueAtTime(volume, startAt + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startAt + duration);
+        oscillator.connect(gain);
+        gain.connect(context.destination);
+        oscillator.start(startAt);
+        oscillator.stop(startAt + duration + 0.02);
+      } catch (error) {
+        reportAudioError(error);
+      }
+    }
+
+    function celebratePuppy() {
+      window.clearTimeout(puppyTimer);
+      let animation = Math.floor(Math.random() * 15) + 1;
+      if (animation === lastPuppyAnimation) animation = animation % 15 + 1;
+      lastPuppyAnimation = animation;
+      puppyEl.className = 'puppy-cheer';
+      void puppyEl.offsetWidth;
+      puppyEl.classList.add('is-celebrating', `cheer-${animation}`);
+      puppyTimer = window.setTimeout(() => {
+        puppyEl.className = 'puppy-cheer';
+      }, 1900);
+    }
+
+    function shuffle(items) {
+      for (let index = items.length - 1; index > 0; index -= 1) {
+        const otherIndex = Math.floor(Math.random() * (index + 1));
+        [items[index], items[otherIndex]] = [items[otherIndex], items[index]];
+      }
+      return items;
+    }
+
+    function makeResults() {
+      if (Math.random() >= 0.4) return shuffle([...symbols]);
+      const roll = Math.random();
+      const matchCount = roll < 0.64 ? 2 : roll < 0.89 ? 3 : roll < 0.98 ? 4 : 5;
+      const matchingSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+      const results = Array(matchCount).fill(matchingSymbol);
+      const otherSymbols = shuffle(symbols.filter(symbol => symbol !== matchingSymbol));
+      results.push(...otherSymbols.slice(0, 5 - matchCount));
+      return shuffle(results);
+    }
+
+    function savePuppyLook() {
+      try {
+        localStorage.setItem(cosmeticsKey, JSON.stringify({ owned: ownedCosmetics, equipped: equippedCosmetic }));
+      } catch (error) {
+        console.error('Puppy cosmetics could not be saved.', error);
+        setMessage('Your puppy look changed, but could not be saved on this device.');
+      }
+    }
+
+    function renderCloset() {
+      puppyEl.dataset.cosmetic = equippedCosmetic;
+      closetListEl.replaceChildren();
+      for (const item of cosmetics) {
+        const owned = ownedCosmetics.includes(item.id);
+        const equipped = equippedCosmetic === item.id;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = `closet-item${equipped ? ' equipped' : ''}`;
+        button.dataset.cosmetic = item.id;
+        button.disabled = isSpinning || (equipped && owned) || (!owned && balance < item.cost);
+        button.setAttribute('aria-pressed', String(equipped));
+        button.setAttribute('aria-label', `${item.name}, ${equipped ? 'equipped' : owned ? 'equip' : `${item.cost} tokens`}`);
+        const preview = document.createElement('span');
+        preview.className = 'closet-preview';
+        preview.setAttribute('aria-hidden', 'true');
+        preview.textContent = item.icon;
+        const name = document.createElement('span');
+        name.className = 'closet-name';
+        name.textContent = item.name;
+        const cost = document.createElement('span');
+        cost.className = 'closet-cost';
+        cost.textContent = equipped ? 'Wearing' : owned ? 'Equip' : item.cost === 0 ? 'Free' : `${item.cost} tokens`;
+        button.append(preview, name, cost);
+        button.addEventListener('click', () => {
+          if (isSpinning) return;
+          if (!owned) {
+            if (balance < item.cost) {
+              setMessage(`You need ${formatNumber(item.cost - balance)} more tokens for the ${item.name}.`);
+              return;
+            }
+            balance -= item.cost;
+            ownedCosmetics.push(item.id);
+          }
+          equippedCosmetic = item.id;
+          savePuppyLook();
+          renderCloset();
+          updateDisplay();
+          if (!messageEl.textContent.startsWith('Your puppy look changed')) {
+            setMessage(`${item.name} equipped! Your puppy looks adorable.`, 'win');
+          }
+        });
+        closetListEl.append(button);
+      }
+    }
+
+    function pickBonusPrize() {
+      bonusChoicesEl.replaceChildren();
+      for (const reward of shuffle([...bonusPrizes])) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'bonus-choice';
+        button.innerHTML = `<span class="bonus-choice-icon" aria-hidden="true">⭐</span><span>Mystery star</span>`;
+        button.setAttribute('aria-label', `Choose a mystery star prize`);
+        button.addEventListener('click', () => bonusDialog.close(String(reward)));
+        bonusChoicesEl.append(button);
+      }
+      return new Promise(resolve => {
+        bonusDialog.addEventListener('close', () => resolve(Number(bonusDialog.returnValue)), { once: true });
+        bonusDialog.showModal();
+      });
+    }
+
+    document.getElementById('bonus-skip').addEventListener('click', () => bonusDialog.close('0'));
 
     try {
       const saved = JSON.parse(sessionStorage.getItem(storageKey));
@@ -336,6 +630,19 @@
       // Statistics are optional when browser storage is unavailable.
     }
 
+    try {
+      const savedCosmetics = JSON.parse(localStorage.getItem(cosmeticsKey));
+      if (Array.isArray(savedCosmetics?.owned)) {
+        ownedCosmetics = [...new Set(savedCosmetics.owned.filter(id => cosmetics.some(item => item.id === id)))];
+      }
+      if (!ownedCosmetics.includes('bow')) ownedCosmetics.unshift('bow');
+      if (cosmetics.some(item => item.id === savedCosmetics?.equipped) && ownedCosmetics.includes(savedCosmetics.equipped)) {
+        equippedCosmetic = savedCosmetics.equipped;
+      }
+    } catch {
+      // Puppy cosmetics are optional when browser storage is unavailable.
+    }
+
     function formatNumber(value) {
       return new Intl.NumberFormat().format(value);
     }
@@ -350,6 +657,7 @@
       document.getElementById('bet-down').disabled = isSpinning || betIndex === 0;
       document.getElementById('bet-up').disabled = isSpinning || betIndex === bets.length - 1;
       resetButton.hidden = balance >= bets[0] || isSpinning;
+      renderCloset();
       try {
         sessionStorage.setItem(storageKey, JSON.stringify({ balance, bet }));
       } catch {
@@ -410,7 +718,8 @@
       setMessage('The current is turning...');
       updateDisplay();
 
-      const results = reelWindows.map(() => symbols[Math.floor(Math.random() * symbols.length)]);
+      unlockAudio();
+      const results = makeResults();
       const speed = quickSpin ? 280 : 720;
       const timers = reelSymbols.map((symbolEl, index) => {
         reelWindows[index].classList.add('spinning');
@@ -427,25 +736,31 @@
         reelWindows[index].classList.remove('spinning');
         reelWindows[index].classList.add('stopped');
         window.setTimeout(() => reelWindows[index].classList.remove('stopped'), 260);
+        playTone(360 + index * 55, 0, 0.07, 0.022, 'triangle');
       }
 
       const counts = results.reduce((map, symbol) => map.set(symbol.name, (map.get(symbol.name) || 0) + 1), new Map());
       const [matchingName, matchCount] = [...counts.entries()].sort((first, second) => second[1] - first[1])[0];
       const matchingSymbol = results.find(symbol => symbol.name === matchingName);
+      const starCount = results.filter(symbol => symbol.name === 'Star').length;
       let winnings = 0;
 
       if (matchCount >= 3) {
         winnings = wager * matchingSymbol.payout * (matchCount - 2);
         reels.classList.add('winner');
         setMessage(`${matchingSymbol.name} ${matchCount}-reel hit! +${formatNumber(winnings)} tokens`, 'win');
+        [523.25, 659.25, 783.99, 1046.5].forEach((frequency, index) => playTone(frequency, index * 0.11, 0.28, 0.05, 'sine'));
       } else if (matchCount === 2) {
         winnings = Math.floor(wager / 2);
         setMessage(`A matching pair! +${formatNumber(winnings)} tokens`, 'win');
+        [523.25, 659.25, 783.99].forEach((frequency, index) => playTone(frequency, index * 0.1, 0.22, 0.04, 'sine'));
       } else {
         setMessage(balance === 0 ? 'Out of tokens. Refill for another round.' : 'No match this time. Try the tide again.', 'loss');
+        playTone(220, 0, 0.22, 0.025, 'sine');
       }
 
       balance += winnings;
+      let totalPayout = winnings;
       if (winnings > 0) {
         wins += 1;
         totalWon += winnings;
@@ -453,7 +768,25 @@
         losses += 1;
       }
       renderStats();
-      lastWinEl.innerHTML = `${formatNumber(winnings)} <small>tokens</small>`;
+      if (winnings > 0) celebratePuppy();
+      if (starCount >= 3) {
+        setMessage('Three stars! Pick a mystery prize, little lucky pup!', 'win');
+        playTone(783.99, 0, 0.2, 0.055, 'sine');
+        playTone(1046.5, 0.14, 0.3, 0.055, 'sine');
+        const bonus = await pickBonusPrize();
+        if (bonus > 0) {
+          balance += bonus;
+          totalWon += bonus;
+          totalPayout += bonus;
+          setMessage(`Star bonus! You found ${formatNumber(bonus)} extra tokens!`, 'win');
+          [659.25, 783.99, 1046.5].forEach((frequency, index) => playTone(frequency, index * 0.12, 0.24, 0.05, 'sine'));
+          renderStats();
+          celebratePuppy();
+        } else {
+          setMessage('Bonus skipped. Your spin winnings are yours to keep.', 'win');
+        }
+      }
+      lastWinEl.innerHTML = `${formatNumber(totalPayout)} <small>tokens</small>`;
       isSpinning = false;
       updateDisplay();
     }
@@ -467,6 +800,14 @@
       updateDisplay();
     });
     spinButton.addEventListener('click', spin);
+    soundToggle.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      syncSoundControl();
+      if (soundEnabled) {
+        unlockAudio();
+        playTone(659.25, 0, 0.14, 0.035, 'sine');
+      }
+    });
     quickToggle.addEventListener('click', () => {
       quickSpin = !quickSpin;
       quickToggle.setAttribute('aria-pressed', String(quickSpin));
@@ -487,6 +828,7 @@
 
     renderStats();
     updateDisplay();
+    syncSoundControl();
   </script>
 </body>
 </html>
